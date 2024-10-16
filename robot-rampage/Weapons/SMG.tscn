@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3 uid="uid://qy5val78g25k"]
+
+[ext_resource type="PackedScene" uid="uid://bgbkbwpjukhj5" path="res://Weapons/hitscan_weapon.tscn" id="1_qw87u"]
+[ext_resource type="PackedScene" uid="uid://dfnwvrub0uxal" path="res://Weapons/sparks.tscn" id="2_kkjak"]
+[ext_resource type="PackedScene" uid="uid://c3wv1micruitl" path="res://Weapons/SMG.glb" id="2_qnotq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dd5o6"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.04
+
+[sub_resource type="Curve" id="Curve_wncjf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_71cyw"]
+curve = SubResource("Curve_wncjf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r72l4"]
+direction = Vector3(0, 0, -1)
+spread = 8.0
+initial_velocity_min = 6.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_71cyw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ns5cu"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="SMG" node_paths=PackedStringArray("weapon_mesh", "weapon_shoot_particles") instance=ExtResource("1_qw87u")]
+weapon_mesh = NodePath("SMG")
+weapon_shoot_particles = NodePath("GPUParticles3D")
+sparks = ExtResource("2_kkjak")
+fire_rate = 14.0
+recoil = 0.05
+damage = 15.0
+automatic = true
+
+[node name="SMG" parent="." index="1" instance=ExtResource("2_qnotq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.501207, -0.391754, -0.865505)
+
+[node name="Suppressors_003" parent="SMG" index="0"]
+layers = 2
+
+[node name="Part_024" parent="SMG" index="1"]
+layers = 2
+
+[node name="Rail_009" parent="SMG" index="2"]
+layers = 2
+
+[node name="Grip_017" parent="SMG" index="3"]
+layers = 2
+
+[node name="Charger_011" parent="SMG" index="4"]
+layers = 2
+
+[node name="Scope_016" parent="SMG" index="5"]
+layers = 2
+
+[node name="Part_029" parent="SMG" index="6"]
+layers = 2
+
+[node name="Part_030" parent="SMG" index="7"]
+layers = 2
+
+[node name="Gun butt_012" parent="SMG" index="8"]
+layers = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49923, -0.346442, -1.96332)
+material_override = SubResource("StandardMaterial3D_dd5o6")
+cast_shadow = 0
+emitting = false
+lifetime = 0.07
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_r72l4")
+draw_pass_1 = SubResource("BoxMesh_ns5cu")
+
+[editable path="SMG"]

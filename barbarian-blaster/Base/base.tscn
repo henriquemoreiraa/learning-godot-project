@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6ybsdkdk6oua"]
+
+[ext_resource type="Script" path="res://Base/base.gd" id="1_iqgrs"]
+[ext_resource type="PackedScene" uid="uid://dq0cvhrohwr1q" path="res://Assets/Base.glb" id="2_xbem0"]
+
+[node name="Base" type="Node3D" groups=["base"]]
+script = ExtResource("1_iqgrs")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
+billboard = 1
+text = "Initial health"
+font_size = 500
+outline_size = 100
+
+[node name="Base" parent="." instance=ExtResource("2_xbem0")]

@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://dc7by362yf4pu"]
+
+[ext_resource type="PackedScene" uid="uid://d18ujvabquf1e" path="res://Assets/Tree.glb" id="1_bb1vf"]
+[ext_resource type="PackedScene" uid="uid://dxy40b61lqmo1" path="res://Assets/Rocks.glb" id="2_comwr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbnft"]
+blend_mode = 1
+albedo_color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ale3"]
+material = SubResource("StandardMaterial3D_qbnft")
+size = Vector3(4, 0.1, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dbskj"]
+data = PackedVector3Array(-2, 0.05, 2, 2, 0.05, 2, -2, -0.05, 2, 2, 0.05, 2, 2, -0.05, 2, -2, -0.05, 2, 2, 0.05, -2, -2, 0.05, -2, 2, -0.05, -2, -2, 0.05, -2, -2, -0.05, -2, 2, -0.05, -2, 2, 0.05, 2, 2, 0.05, -2, 2, -0.05, 2, 2, 0.05, -2, 2, -0.05, -2, 2, -0.05, 2, -2, 0.05, -2, -2, 0.05, 2, -2, -0.05, -2, -2, 0.05, 2, -2, -0.05, 2, -2, -0.05, -2, 2, 0.05, 2, -2, 0.05, 2, 2, 0.05, -2, -2, 0.05, 2, -2, 0.05, -2, 2, 0.05, -2, -2, -0.05, 2, 2, -0.05, 2, -2, -0.05, -2, 2, -0.05, 2, 2, -0.05, -2, -2, -0.05, -2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6djd"]
+transparency = 1
+albedo_color = Color(0.85098, 0.254902, 0.247059, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ribv2"]
+material = SubResource("StandardMaterial3D_r6djd")
+size = Vector3(4, 0.1, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d1h7p"]
+data = PackedVector3Array(-2, 0.05, 2, 2, 0.05, 2, -2, -0.05, 2, 2, 0.05, 2, 2, -0.05, 2, -2, -0.05, 2, 2, 0.05, -2, -2, 0.05, -2, 2, -0.05, -2, -2, 0.05, -2, -2, -0.05, -2, 2, -0.05, -2, 2, 0.05, 2, 2, 0.05, -2, 2, -0.05, 2, 2, 0.05, -2, 2, -0.05, -2, 2, -0.05, 2, -2, 0.05, -2, -2, 0.05, 2, -2, -0.05, -2, -2, 0.05, 2, -2, -0.05, 2, -2, -0.05, -2, 2, 0.05, 2, -2, 0.05, 2, 2, 0.05, -2, -2, 0.05, 2, -2, 0.05, -2, 2, 0.05, -2, -2, -0.05, 2, 2, -0.05, 2, -2, -0.05, -2, 2, -0.05, 2, 2, -0.05, -2, -2, -0.05, -2)
+
+[node name="SpaceLibrary" type="Node3D"]
+
+[node name="FreeSpace" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_7ale3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="FreeSpace"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FreeSpace/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_dbskj")
+
+[node name="TurretSpace" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ribv2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TurretSpace"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TurretSpace/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_d1h7p")
+
+[node name="Tree" parent="." instance=ExtResource("1_bb1vf")]
+
+[node name="Rocks" parent="." instance=ExtResource("2_comwr")]

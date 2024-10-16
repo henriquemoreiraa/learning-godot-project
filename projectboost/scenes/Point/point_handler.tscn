@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://c63ih76uci26b"]
+
+[ext_resource type="Script" path="res://scenes/Point/point_handler.gd" id="1_i3qjm"]
+
+[node name="PointHandler" type="Node"]
+script = ExtResource("1_i3qjm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -77.0
+offset_right = 220.0
+grow_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PointLabel" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Points Label"

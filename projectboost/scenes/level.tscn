@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://badwhpl6778pv"]
+
+[ext_resource type="PackedScene" uid="uid://bhaxynjku2ohq" path="res://scenes/player.tscn" id="1_lgdf6"]
+[ext_resource type="PackedScene" uid="uid://b5uy0eee37hng" path="res://scenes/background.tscn" id="2_kq5jg"]
+[ext_resource type="PackedScene" uid="uid://b2qh1dhd3s4gs" path="res://scenes/Point/point.tscn" id="4_4egqc"]
+[ext_resource type="PackedScene" uid="uid://bbhnttimbbcwu" path="res://scenes/TimeHandler/time_handler.tscn" id="5_xloby"]
+[ext_resource type="PackedScene" uid="uid://05fmlgvgqss0" path="res://scenes/VictoryLayer/victory_layer.tscn" id="6_3nasy"]
+[ext_resource type="PackedScene" uid="uid://c63ih76uci26b" path="res://scenes/Point/point_handler.tscn" id="6_cah08"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hp4na"]
+albedo_color = Color(0.164267, 0.56, 0.112, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpa2u"]
+albedo_color = Color(0.1264, 0.44714, 0.79, 1)
+
+[node name="Level" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_lgdf6")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 1.4, 0)
+
+[node name="Floor" parent="." instance=ExtResource("2_kq5jg")]
+
+[node name="LandingPad" type="CSGBox3D" parent="." groups=["Goal"]]
+transform = Transform3D(0.999746, 0, 0.0225477, 0, 1, 0, -0.0225477, 0, 0.999746, -10, 0.2, -0.073)
+use_collision = true
+size = Vector3(2, 0.4, 2)
+material = SubResource("StandardMaterial3D_hp4na")
+
+[node name="LaunchPad" type="CSGBox3D" parent="."]
+transform = Transform3D(0.999746, 0, 0.0225477, 0, 1, 0, -0.0225477, 0, 0.999746, 10, 0.2, 0)
+use_collision = true
+size = Vector3(2, 0.4, 2)
+material = SubResource("StandardMaterial3D_rpa2u")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, -1.81762e-08, 8.55124e-08, 0, 0.978148, 0.207912, -8.74228e-08, 0.207912, -0.978148, 0, 5, -8)
+
+[node name="Score" parent="." instance=ExtResource("4_4egqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0225, 0)
+
+[node name="Score3" parent="." instance=ExtResource("4_4egqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 4.0225, 0)
+
+[node name="Score2" parent="." instance=ExtResource("4_4egqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 4.0225, 0)
+
+[node name="TimeHandler" parent="." instance=ExtResource("5_xloby")]
+unique_name_in_owner = true
+
+[node name="VictoryLayer" parent="." instance=ExtResource("6_3nasy")]
+unique_name_in_owner = true
+visible = false
+next_level_file = "res://scenes/level_2.tscn"
+level = 1
+time_achievement = 10
+points_achievement = 3
+
+[node name="PointHandler" parent="." instance=ExtResource("6_cah08")]
+unique_name_in_owner = true

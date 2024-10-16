@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=3 uid="uid://doo4n2vvbtq6d"]
+
+[ext_resource type="PackedScene" uid="uid://bgbkbwpjukhj5" path="res://Weapons/hitscan_weapon.tscn" id="1_lbquu"]
+[ext_resource type="PackedScene" uid="uid://dfnwvrub0uxal" path="res://Weapons/sparks.tscn" id="2_cdd6r"]
+[ext_resource type="PackedScene" uid="uid://ct2sbscpq881q" path="res://Weapons/Rifle.glb" id="3_o4ny1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dd5o6"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.04
+
+[sub_resource type="Curve" id="Curve_wncjf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_71cyw"]
+curve = SubResource("Curve_wncjf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r72l4"]
+direction = Vector3(0, 0, -1)
+spread = 8.0
+initial_velocity_min = 6.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_71cyw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ns5cu"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Rifle" node_paths=PackedStringArray("weapon_mesh", "weapon_shoot_particles") instance=ExtResource("1_lbquu")]
+weapon_mesh = NodePath("Rifle")
+weapon_shoot_particles = NodePath("GPUParticles3D")
+sparks = ExtResource("2_cdd6r")
+fire_rate = 8.0
+recoil = 0.3
+damage = 70.0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.485448, -0.388024, -2.26432)
+material_override = SubResource("StandardMaterial3D_dd5o6")
+cast_shadow = 0
+emitting = false
+lifetime = 0.07
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_r72l4")
+draw_pass_1 = SubResource("BoxMesh_ns5cu")
+
+[node name="Rifle" parent="." index="3" instance=ExtResource("3_o4ny1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.501207, -0.391754, -0.865505)
+
+[node name="Part_104" parent="Rifle" index="0"]
+layers = 2
+
+[node name="Gun butt_018" parent="Rifle" index="1"]
+layers = 2
+
+[node name="Part_106" parent="Rifle" index="2"]
+layers = 2
+
+[node name="Grip_027" parent="Rifle" index="3"]
+layers = 2
+
+[node name="Part_108" parent="Rifle" index="4"]
+layers = 2
+
+[node name="Scope_022" parent="Rifle" index="5"]
+layers = 2
+
+[node name="Scope_023" parent="Rifle" index="6"]
+layers = 2
+
+[node name="Extra accessories_008" parent="Rifle" index="7"]
+layers = 2
+
+[node name="Part_112" parent="Rifle" index="8"]
+layers = 2
+
+[node name="Part_113" parent="Rifle" index="9"]
+layers = 2
+
+[node name="Muzzle breaks" parent="Rifle" index="10"]
+layers = 2
+
+[editable path="Rifle"]

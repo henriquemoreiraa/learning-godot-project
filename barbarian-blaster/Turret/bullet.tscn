@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://666wx4qhcrxq"]
+
+[ext_resource type="Script" path="res://Turret/bullet.gd" id="1_xm7jb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbcvf"]
+albedo_color = Color(0.611765, 0.219608, 0.290196, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dc24u"]
+material = SubResource("StandardMaterial3D_lbcvf")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tyrs2"]
+
+[node name="Bullet" type="Area3D"]
+top_level = true
+script = ExtResource("1_xm7jb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_dc24u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_tyrs2")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

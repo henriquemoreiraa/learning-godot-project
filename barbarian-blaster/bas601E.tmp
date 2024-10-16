@@ -1,0 +1,120 @@
+[gd_scene load_steps=13 format=3 uid="uid://c1gs2rd1cspqy"]
+
+[ext_resource type="MeshLibrary" uid="uid://58ysfnxs51sc" path="res://MeshLibraries/SpaceLibrary.tres" id="1_i5p6b"]
+[ext_resource type="PackedScene" uid="uid://b3jxcl5ia8rpj" path="res://RayPickerCamera/ray_picker_camera.tscn" id="1_kiu5b"]
+[ext_resource type="PackedScene" uid="uid://c33a8bco287ep" path="res://Enemy/enemy.tscn" id="2_7t1sr"]
+[ext_resource type="PackedScene" uid="uid://b6ybsdkdk6oua" path="res://Base/base.tscn" id="3_6bqjk"]
+[ext_resource type="Script" path="res://Enemy/enemy_path.gd" id="3_tednk"]
+[ext_resource type="Script" path="res://turret_manager.gd" id="5_xhwjy"]
+[ext_resource type="PackedScene" uid="uid://c1bl4arytuno3" path="res://Turret/turret.tscn" id="6_s0dhm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8r7x2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_1kji3"]
+sky_material = SubResource("ProceduralSkyMaterial_8r7x2")
+
+[sub_resource type="Environment" id="Environment_dnpsn"]
+background_mode = 2
+sky = SubResource("Sky_1kji3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3mosx"]
+albedo_color = Color(0.266667, 0.266667, 0.266667, 0.266667)
+
+[sub_resource type="Curve3D" id="Curve3D_b086h"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -21, 0, 2, -0.5, 0, -0.8, 0.691034, 0, 1.10565, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 6, -0.728513, 0, 0.910642, 0.8, 0, -1, 14, 0, 6, 0, 0, 0, 0, 0, 0, 14, 0, -7),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="BaseLevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dnpsn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_3mosx")
+
+[node name="RayPickerCamera" parent="." node_paths=PackedStringArray("grid_map", "turret_manager") instance=ExtResource("1_kiu5b")]
+grid_map = NodePath("../GridMap")
+turret_manager = NodePath("../TurretManager")
+
+[node name="GridMap" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.615004, 0)
+mesh_library = ExtResource("1_i5p6b")
+cell_size = Vector3(4, 4, 4)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65535, 65534, 0, 65535, 2, 0, 65531, 65535, 0, 4, 65535, 0, 65531, 65534, 0, 65531, 1, 0, 65531, 2, 0, 65532, 65534, 0, 65532, 2, 0, 65533, 65534, 0, 65533, 2, 0, 65534, 65534, 0, 65534, 2, 0, 0, 65534, 0, 0, 2, 0, 1, 65534, 0, 1, 2, 0, 2, 65534, 0, 2, 2, 0, 3, 2, 0, 4, 65534, 0, 4, 0, 0, 4, 1, 0, 4, 2, 0, 65532, 65535, 0, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 0, 0, 65535, 0, 1, 65535, 0, 2, 65535, 0, 2, 0, 0, 1, 0, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0)
+}
+
+[node name="EnemyPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.956964, 0)
+curve = SubResource("Curve3D_b086h")
+script = ExtResource("3_tednk")
+enemy = ExtResource("2_7t1sr")
+
+[node name="Road" type="CSGPolygon3D" parent="EnemyPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.41766, 0)
+polygon = PackedVector2Array(-1, 0, -1, 0.1, 1, 0.1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="LeftEdge" type="CSGPolygon3D" parent="EnemyPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.41766, 0)
+polygon = PackedVector2Array(-1.1, 0, -1.1, 0.15, -0.9, 0.1, -0.9, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="RightEdge" type="CSGPolygon3D" parent="EnemyPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.41766, 0)
+polygon = PackedVector2Array(0.9, 0, 0.9, 0.15, 1.1, 0.15, 1.1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Timer" type="Timer" parent="EnemyPath"]
+wait_time = 2.0
+autostart = true
+
+[node name="Base" parent="." instance=ExtResource("3_6bqjk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -7)
+
+[node name="TurretManager" type="Node3D" parent="." node_paths=PackedStringArray("enemy_path")]
+script = ExtResource("5_xhwjy")
+turret = ExtResource("6_s0dhm")
+enemy_path = NodePath("../EnemyPath")
+
+[connection signal="timeout" from="EnemyPath/Timer" to="EnemyPath" method="_on_timer_timeout"]

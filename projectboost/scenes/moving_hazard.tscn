@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6abl5xlj6ssd"]
+
+[ext_resource type="Script" path="res://scripts/moving_hazard.gd" id="1_5dx66"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5nt7b"]
+albedo_color = Color(0.82, 0.7544, 0.164, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_frk1e"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3tcnv"]
+data = PackedVector3Array(-1.5, 1.5, 1.5, 1.5, 1.5, 1.5, -1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -1.5, 1.5, 1.5, 1.5, -1.5, -1.5, 1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -1.5, 1.5, -1.5, 1.5, -1.5, 1.5, -1.5, -1.5, 1.5, 1.5, -1.5, -1.5, -1.5, -1.5, 1.5, 1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 1.5, 1.5, -1.5, 1.5, 1.5, 1.5, 1.5, -1.5, -1.5, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, 1.5, 1.5, -1.5, -1.5, -1.5, -1.5, -1.5)
+
+[node name="moving_hazard" type="AnimatableBody3D" groups=["Lose"]]
+script = ExtResource("1_5dx66")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52813, 0.0246048)
+material_override = SubResource("StandardMaterial3D_5nt7b")
+mesh = SubResource("BoxMesh_frk1e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52813, 0.0246048)
+shape = SubResource("ConcavePolygonShape3D_3tcnv")

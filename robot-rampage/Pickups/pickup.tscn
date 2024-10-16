@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://bm4ao7s1f6f7w"]
+
+[ext_resource type="Script" path="res://Pickups/pickup.gd" id="1_c2jnb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8uuxs"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8mly2"]
+radius = 1.0
+
+[sub_resource type="Animation" id="Animation_7ckvy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2.61799, 0, -0.794125)]
+}
+
+[sub_resource type="Animation" id="Animation_b5u1o"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(-2.61799, 0, -0.794125), Vector3(-2.61799, 6.28319, -0.794125)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c08lu"]
+_data = {
+"RESET": SubResource("Animation_7ckvy"),
+"idle": SubResource("Animation_b5u1o")
+}
+
+[node name="Pickup" type="Area3D"]
+script = ExtResource("1_c2jnb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.700909, 0.713251, 0, 0.617692, -0.607004, 0.500003, 0.356628, -0.350457, -0.866023, 0, 0, 0)
+mesh = SubResource("BoxMesh_8uuxs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_8mly2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_c08lu")
+}
+autoplay = "idle"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

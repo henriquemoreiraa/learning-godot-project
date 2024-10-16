@@ -1,0 +1,161 @@
+[gd_scene load_steps=18 format=3 uid="uid://c1gs2rd1cspqy"]
+
+[ext_resource type="MeshLibrary" uid="uid://58ysfnxs51sc" path="res://MeshLibraries/SpaceLibrary.tres" id="1_i5p6b"]
+[ext_resource type="PackedScene" uid="uid://b3jxcl5ia8rpj" path="res://RayPickerCamera/ray_picker_camera.tscn" id="1_kiu5b"]
+[ext_resource type="PackedScene" uid="uid://c33a8bco287ep" path="res://Enemy/enemy.tscn" id="2_7t1sr"]
+[ext_resource type="PackedScene" uid="uid://b6ybsdkdk6oua" path="res://Base/base.tscn" id="3_6bqjk"]
+[ext_resource type="Script" path="res://Enemy/enemy_path.gd" id="3_tednk"]
+[ext_resource type="Script" path="res://turret_manager.gd" id="5_xhwjy"]
+[ext_resource type="PackedScene" uid="uid://c1bl4arytuno3" path="res://Turret/turret.tscn" id="6_s0dhm"]
+[ext_resource type="Script" path="res://Bank/bank.gd" id="8_pw5ok"]
+[ext_resource type="PackedScene" uid="uid://bves0hdw3e7ob" path="res://DifficultyManager/difficulty_manager.tscn" id="9_hlwjt"]
+[ext_resource type="PackedScene" uid="uid://d4d4p6oy86nf8" path="res://UserInterface/victory_layer.tscn" id="10_1e6d7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8r7x2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_1kji3"]
+sky_material = SubResource("ProceduralSkyMaterial_8r7x2")
+
+[sub_resource type="Environment" id="Environment_dnpsn"]
+background_mode = 2
+sky = SubResource("Sky_1kji3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3mosx"]
+albedo_color = Color(0.560784, 0.6, 0.301961, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_b086h"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -21, 0, 2, -0.5, 0, -0.8, 0.691034, 0, 1.10565, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 6, -0.728513, 0, 0.910642, 0.8, 0, -1, 14, 0, 6, 0, 0, 0, 0, 0, 0, 14, 0, -7),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0a3xq"]
+albedo_color = Color(0.259294, 0.259294, 0.259294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_76wur"]
+font_size = 50
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[node name="BaseLevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dnpsn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_3mosx")
+
+[node name="RayPickerCamera" parent="." node_paths=PackedStringArray("grid_map", "turret_manager") instance=ExtResource("1_kiu5b")]
+grid_map = NodePath("../GridMap")
+turret_manager = NodePath("../TurretManager")
+
+[node name="GridMap" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.615004, 0)
+mesh_library = ExtResource("1_i5p6b")
+cell_size = Vector3(4, 4, 4)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65535, 65534, 0, 65531, 65535, 2, 4, 65535, 0, 65531, 65534, 655362, 65531, 1, 0, 65532, 65534, 0, 65533, 65534, 3, 65534, 65534, 1048579, 0, 65534, 0, 0, 2, 0, 1, 65534, 0, 1, 2, 0, 2, 65534, 0, 2, 2, 655362, 3, 2, 0, 4, 65534, 0, 4, 0, 0, 4, 1, 0, 4, 2, 655362, 65532, 65535, 0, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 0, 0, 65535, 0, 1, 65535, 3, 2, 65535, 0, 2, 0, 0, 1, 0, 0, 65532, 1, 0, 65533, 1, 2, 65534, 1, 0, 65535, 1, 0, 65530, 65529, 2, 65530, 65530, 2, 65530, 65531, 2, 65531, 65531, 2, 65532, 65531, 2, 65533, 65531, 2, 65534, 65531, 2, 65535, 65531, 2, 65535, 65530, 2, 65535, 65529, 2, 65534, 65529, 2, 65533, 65529, 2, 65532, 65529, 2, 65531, 65529, 2, 65531, 65530, 2, 65532, 65530, 2, 65533, 65530, 2, 65534, 65530, 2, 0, 65530, 2, 0, 65531, 2, 0, 65532, 2, 1, 65532, 2, 2, 65532, 2, 2, 65531, 2, 2, 65530, 2, 1, 65530, 2, 1, 65531, 2, 3, 65532, 2, 4, 65532, 2, 5, 65532, 2, 5, 65533, 2, 5, 65534, 2, 5, 65535, 2, 6, 65535, 2, 6, 65534, 2, 6, 65533, 2, 6, 65532, 2, 65535, 65532, 2, 65529, 65532, 2, 65529, 65533, 2, 65528, 65533, 2, 65528, 65534, 2, 65529, 65534, 2, 65529, 65535, 2, 65530, 0, 2, 65529, 0, 2, 65529, 1, 2, 5, 0, 1441794, 5, 1, 1441794, 6, 1, 1441794, 6, 2, 1441794, 65528, 65531, 1441794, 65527, 65531, 1441794, 65526, 65531, 1441794, 65527, 65532, 1441794, 65527, 65533, 1441794, 65531, 65533, 1441794, 65532, 65533, 1441794, 65530, 65534, 1441794, 3, 65529, 1441794, 3, 65530, 1441794, 3, 65531, 1441794, 4, 65529, 1441794, 4, 65530, 1441794, 4, 65531, 1441794, 5, 65529, 1441794, 5, 65530, 1441794, 5, 65531, 1441794, 6, 65529, 1441794, 6, 65530, 1441794, 6, 65531, 1441794, 7, 65529, 1441794, 7, 65530, 1441794, 7, 65531, 1441794, 8, 65529, 1441794, 8, 65530, 1441794, 8, 65531, 1441794, 7, 65532, 1441794, 7, 65533, 1441794, 7, 65534, 1441794, 7, 65535, 1441794, 7, 0, 1441794, 7, 1, 1441794, 8, 65532, 1441794, 8, 65533, 1441794, 8, 65534, 1441794, 8, 65535, 1441794, 8, 0, 1441794, 8, 1, 1441794, 9, 65532, 2, 9, 65533, 2, 9, 65534, 2, 9, 65535, 2, 9, 0, 2, 9, 1, 2, 9, 65529, 2, 9, 65530, 2, 9, 65531, 2, 9, 2, 2, 10, 65529, 2, 10, 65530, 2, 10, 65531, 2, 10, 65532, 2, 10, 65533, 2, 10, 65534, 2, 10, 65535, 2, 10, 0, 2, 10, 1, 2, 10, 2, 2, 11, 65529, 2, 11, 65530, 2, 11, 65531, 2, 11, 65532, 2, 11, 65533, 2, 11, 65534, 2, 11, 65535, 2, 11, 0, 2, 11, 1, 2, 11, 2, 2, 0, 65529, 2, 1, 65529, 2, 2, 65529, 2, 2, 65528, 2, 2, 65527, 2, 1, 65527, 2, 0, 65527, 2, 0, 65528, 2, 1, 65528, 2, 65530, 65532, 2, 65533, 2, 2, 65532, 2, 2, 65531, 2, 2, 65530, 2, 2, 65530, 3, 2, 65531, 3, 2, 65532, 3, 2)
+}
+
+[node name="EnemyPath" type="Path3D" parent="." node_paths=PackedStringArray("difficulty_manager", "victory_layer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.956964, 0)
+curve = SubResource("Curve3D_b086h")
+script = ExtResource("3_tednk")
+enemy = ExtResource("2_7t1sr")
+difficulty_manager = NodePath("../DifficultyManager")
+victory_layer = NodePath("../VictoryLayer")
+
+[node name="Road" type="CSGPolygon3D" parent="EnemyPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+polygon = PackedVector2Array(-1, 0, -1, 0.1, 1, 0.1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("StandardMaterial3D_0a3xq")
+
+[node name="LeftEdge" type="CSGPolygon3D" parent="EnemyPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+polygon = PackedVector2Array(-1.1, 0, -1.1, 0.15, -0.9, 0.1, -0.9, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="RightEdge" type="CSGPolygon3D" parent="EnemyPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+polygon = PackedVector2Array(0.9, 0, 0.9, 0.15, 1.1, 0.15, 1.1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.5
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Timer" type="Timer" parent="EnemyPath"]
+wait_time = 2.0
+autostart = true
+
+[node name="Base" parent="." instance=ExtResource("3_6bqjk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -7)
+
+[node name="TurretManager" type="Node3D" parent="." node_paths=PackedStringArray("enemy_path")]
+script = ExtResource("5_xhwjy")
+turret = ExtResource("6_s0dhm")
+enemy_path = NodePath("../EnemyPath")
+
+[node name="Bank" type="MarginContainer" parent="." groups=["bank"]]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("8_pw5ok")
+
+[node name="Label" type="Label" parent="Bank"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Placeholder"
+label_settings = SubResource("LabelSettings_76wur")
+uppercase = true
+
+[node name="DifficultyManager" parent="." instance=ExtResource("9_hlwjt")]
+
+[node name="VictoryLayer" parent="." instance=ExtResource("10_1e6d7")]
+visible = false
+
+[connection signal="timeout" from="EnemyPath/Timer" to="EnemyPath" method="spawn_enemy"]
+[connection signal="stop_spawing_enemies" from="DifficultyManager" to="EnemyPath" method="_on_difficulty_manager_stop_spawing_enemies"]

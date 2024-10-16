@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbhnttimbbcwu"]
+
+[ext_resource type="Script" path="res://scenes/TimeHandler/time_handler.gd" id="1_880to"]
+
+[node name="TimeHandler" type="Node"]
+script = ExtResource("1_880to")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "TIME"

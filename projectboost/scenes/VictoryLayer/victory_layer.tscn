@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://05fmlgvgqss0"]
+
+[ext_resource type="Script" path="res://scenes/VictoryLayer/victory_layer.gd" id="1_3j8nl"]
+[ext_resource type="Shader" uid="uid://deg071imod1dp" path="res://scenes/level.tres" id="1_e06v8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7did"]
+shader = ExtResource("1_e06v8")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vxlvn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwgfv"]
+bg_color = Color(0, 0, 0, 0.470588)
+
+[node name="VictoryLayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3j8nl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_w7did")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_vxlvn")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(432.235, 344.385)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rwgfv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="LevelCompletedLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "Level 0 completed!"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="AchievementsLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "0/2 Achievements"
+horizontal_alignment = 1
+
+[node name="TimeAchievementLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.168627)
+theme_override_font_sizes/font_size = 14
+text = "+ Time: 0"
+horizontal_alignment = 1
+
+[node name="PointsAchievementLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.168627)
+theme_override_font_sizes/font_size = 14
+text = "+ Points: 0"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="RetryButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Retry"
+
+[node name="NextButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Next"
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]

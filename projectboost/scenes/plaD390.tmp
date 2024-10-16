@@ -1,0 +1,179 @@
+[gd_scene load_steps=22 format=3 uid="uid://bhaxynjku2ohq"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_h02qm"]
+[ext_resource type="AudioStream" uid="uid://bosbhdbgbruhd" path="res://sounds/SFX - Death Explosion.ogg" id="2_ov4cq"]
+[ext_resource type="AudioStream" uid="uid://dqqdabaseg8y3" path="res://sounds/SFX - Success.ogg" id="3_7syhf"]
+[ext_resource type="AudioStream" uid="uid://bdh3slk54jf8b" path="res://sounds/SFX - Main engine thrust.ogg" id="4_x0utv"]
+[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://particles/booster_particles.tscn" id="5_gs3l7"]
+[ext_resource type="PackedScene" uid="uid://dcecb8hw7dbrv" path="res://particles/explosion_particles.tscn" id="6_lcmk1"]
+[ext_resource type="PackedScene" uid="uid://jfwajmrh6ca7" path="res://particles/success_particles.tscn" id="7_lnyvo"]
+[ext_resource type="Material" uid="uid://b6nxokgwq7aql" path="res://ShipDarkRed.tres" id="8_ua23t"]
+[ext_resource type="Material" uid="uid://rwwp1c5alsbv" path="res://ShipRed.tres" id="9_ipv2d"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0hnpe"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vsyxq"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qjar3"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 1.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_o5d2b"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6bvde"]
+top_radius = 0.1
+bottom_radius = 0.3
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wjibf"]
+top_radius = 0.04
+bottom_radius = 0.15
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h1gln"]
+top_radius = 0.24
+bottom_radius = 0.24
+height = 0.15
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6apsr"]
+top_radius = 0.24
+bottom_radius = 0.24
+height = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8v0m0"]
+top_radius = 0.22
+bottom_radius = 0.22
+height = 0.03
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x4yoc"]
+top_radius = 0.3
+bottom_radius = 0.35
+height = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_3sula"]
+size = Vector3(0.1, 0.1, 0.5)
+
+[sub_resource type="TorusMesh" id="TorusMesh_j8yi0"]
+inner_radius = 0.48
+outer_radius = 0.38
+rings = 54
+ring_segments = 21
+
+[node name="Player" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.17865e-08, 0, -3.17865e-08, 1, 0, 0, 0)
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+contact_monitor = true
+max_contacts_reported = 10
+linear_damp = 1.0
+angular_damp = 3.0
+script = ExtResource("1_h02qm")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00924778, -0.126983, 0.00206757)
+visible = false
+mesh = SubResource("CylinderMesh_0hnpe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999769, -0.0215008, 0, 0.0215008, 0.999769, 0, -0.127, 0)
+shape = SubResource("CylinderShape3D_vsyxq")
+
+[node name="ExplosionAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ov4cq")
+
+[node name="SuccessAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7syhf")
+
+[node name="RocketAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_x0utv")
+
+[node name="BoosterParticles" parent="." instance=ExtResource("5_gs3l7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0)
+
+[node name="LeftBoosterParticles" parent="." instance=ExtResource("5_gs3l7")]
+transform = Transform3D(1, 0, 0, 0, 0.875405, -0.483389, 0, 0.483389, 0.875405, 0, -0.86204, -0.38)
+
+[node name="RightBoosterParticles" parent="." instance=ExtResource("5_gs3l7")]
+transform = Transform3D(1, 0, 0, 0, 0.890634, 0.454721, 0, -0.454721, 0.890634, 0, -0.884117, 0.393436)
+
+[node name="ExplosionParticles" parent="." instance=ExtResource("6_lcmk1")]
+
+[node name="SuccessParticles" parent="." instance=ExtResource("7_lnyvo")]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.370167, -0.00552185)
+material_override = ExtResource("8_ua23t")
+mesh = SubResource("CylinderMesh_qjar3")
+
+[node name="Cockpit" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.949079, 0.001)
+material_override = ExtResource("8_ua23t")
+mesh = SubResource("CylinderMesh_o5d2b")
+skeleton = NodePath("../..")
+
+[node name="CentralBoost" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.257186, 0)
+material_override = ExtResource("8_ua23t")
+mesh = SubResource("CylinderMesh_6bvde")
+
+[node name="RightBoost" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 0.978074, 0.208253, 0, -0.208253, 0.978074, -0.00245035, -0.31458, 0.364684)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("CylinderMesh_wjibf")
+
+[node name="Divider" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.308822, 0)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("CylinderMesh_h1gln")
+
+[node name="Divider3" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.253064, 0)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("CylinderMesh_6apsr")
+
+[node name="Divider2" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.690257, 0)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("CylinderMesh_8v0m0")
+
+[node name="CenterBoostBase" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.720886, 0)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("CylinderMesh_x4yoc")
+
+[node name="RightBoostSei" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 0.766112, -0.642707, 0, 0.642707, 0.766112, -4.67002e-05, -0.0744626, 0.172064)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("BoxMesh_3sula")
+
+[node name="LeftBoost" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(-1, 1.81762e-08, -8.55123e-08, 0, 0.978147, 0.207912, 8.74228e-08, 0.207912, -0.978147, -0.002, -0.315, -0.365)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("CylinderMesh_wjibf")
+
+[node name="LeftBoostSei" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(-1, -5.61943e-08, -6.69697e-08, 0, 0.766044, -0.642788, 8.74228e-08, -0.642788, -0.766044, 0, -0.074, -0.172)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("BoxMesh_3sula")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.346774, 0)
+material_override = ExtResource("9_ipv2d")
+mesh = SubResource("TorusMesh_j8yi0")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-0.0183423, 0, 0.999832, 0, 1, 0, -0.999832, 0, -0.0183423, 0, 0, 0)
+visible = false
+pixel_size = 0.013
+offset = Vector2(0, 97)
+text = "Wait time"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
